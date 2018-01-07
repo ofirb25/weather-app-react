@@ -1,8 +1,12 @@
 import React from 'react';
+
 import Header from './header'
 import Cards from './Cards'
 import DetailsModal from './DetailsModal'
+import Loading from './Loading'
+
 import api from '../utils/api';
+import { setTimeout } from 'timers';
 
 class App extends React.Component {
   constructor(props) {
@@ -13,17 +17,24 @@ class App extends React.Component {
         { name: 'New York', img: 'https://www.citysightseeingnewyork.com/media/catalog/product/cache/2/small_image/9df78eab33525d08d6e5fb8d27136e95/e/m/emprie_state_building_16.jpg' },
         { name: 'Hong Kong', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqO2TwTlNHP7iLtzwGBAY7sy4SNeAeKShCZiRvpJxVAHmOkuFTkQ' }]
       ,
-      selectedCity: null
+      selectedCity: null,
+      isFetching: false
 
     }
   }
   handleSelection = (city) => {
+    this.setState({ isFetching: true })
     console.log('city:', city);
     var localCityData = this.state.cities.find(currCity => currCity.name === city)
-    api.getCityData(city)
+    api.getCityData_server(city)
       .then(data => {
-        console.log({...data,...localCityData})
-        this.setState({ selectedCity: {...data,...localCityData} });
+        setTimeout(() => {
+          this.setState({
+            selectedCity: { ...data, ...localCityData },
+            isFetching: false
+          });
+        }, 1000)
+
       })
       .catch(err => alert(err))
   }
@@ -38,9 +49,10 @@ class App extends React.Component {
           cities={this.state.cities}
           handleSelection={this.handleSelection}
         />
+        {this.state.isFetching ? <Loading /> : null}
         {this.state.selectedCity ? <DetailsModal
           handleCloseModal={this.handleCloseModal}
-          data = {this.state.selectedCity}
+          data={this.state.selectedCity}
         /> : null}
       </div>
     );
