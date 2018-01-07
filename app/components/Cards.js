@@ -5,7 +5,6 @@ function Cards(props) {
     var cities = props.cities
     var cards = cities.map(city => {
         return (
-
             <div className="city-card" key={city.name} 
             onClick={()=> {props.handleSelection(city.name)}}>
                 <div className="image">

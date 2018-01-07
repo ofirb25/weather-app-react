@@ -1,6 +1,9 @@
 
 body {
 }
+.my-container {
+  padding: 1.5em 2em;
+}
 
 .cards-wrapper {
   display: flex;
@@ -27,3 +30,49 @@ body {
     }
   }
 }
+
+.my-modal {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(106, 106, 106, 0.555);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .m-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width:50%;
+    background-color:white;
+    padding: 2em;
+    .modal-img img{
+      max-height: 200px !important;
+      width:auto;
+    }
+    h4,h2 {
+      font-size: 1.5em;
+    }
+  }
+  .fa-times {
+    cursor: pointer;
+    font-size: 1.3em;
+    align-self: flex-end;
+  }
+  .weather-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    img {
+      width:150px;
+      height:150px;
+      border-radius: 50%;
+    }
+    
+  }
+} 
+

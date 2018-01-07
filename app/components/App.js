@@ -1,6 +1,8 @@
 import React from 'react';
 import Header from './header'
 import Cards from './Cards'
+import DetailsModal from './DetailsModal'
+import api from '../utils/api';
 
 class App extends React.Component {
   constructor(props) {
@@ -11,23 +13,35 @@ class App extends React.Component {
         { name: 'New York', img: 'https://www.citysightseeingnewyork.com/media/catalog/product/cache/2/small_image/9df78eab33525d08d6e5fb8d27136e95/e/m/emprie_state_building_16.jpg' },
         { name: 'Hong Kong', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqO2TwTlNHP7iLtzwGBAY7sy4SNeAeKShCZiRvpJxVAHmOkuFTkQ' }]
       ,
-      selectedCity: ''
-      
+      selectedCity: null
+
     }
   }
   handleSelection = (city) => {
     console.log('city:', city);
-    this.setState({selectedCity:city});
-
+    var localCityData = this.state.cities.find(currCity => currCity.name === city)
+    api.getCityData(city)
+      .then(data => {
+        console.log({...data,...localCityData})
+        this.setState({ selectedCity: {...data,...localCityData} });
+      })
+      .catch(err => alert(err))
+  }
+  handleCloseModal = () => {
+    this.setState({ selectedCity: null })
   }
   render() {
     return (
-      <div className="container">
+      <div className="my-container">
         <Header />
-        <Cards 
-        cities={this.state.cities} 
-        handleSelection = {this.handleSelection}
+        <Cards
+          cities={this.state.cities}
+          handleSelection={this.handleSelection}
         />
+        {this.state.selectedCity ? <DetailsModal
+          handleCloseModal={this.handleCloseModal}
+          data = {this.state.selectedCity}
+        /> : null}
       </div>
     );
   }
