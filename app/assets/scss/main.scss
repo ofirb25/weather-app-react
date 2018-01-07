@@ -2,3 +2,28 @@
 body {
 }
 
+.cards-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+  .city-card {
+    transition: .3s;
+    cursor: pointer;
+    padding:1em;
+    border:1px solid rgba(163, 161, 161, 0.205);
+    margin: 1em 0; 
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    height:300px;
+    .image {
+      max-width: 300px;
+      
+    }
+    &:hover {
+      transform:scale(1.1)
+    }
+  }
+}

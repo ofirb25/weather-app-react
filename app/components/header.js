@@ -4,7 +4,7 @@ function Header () {
     return (
         <section className="hero is-primary">
         <div className="hero-body">
-          <div className="container">
+          <div className="container is-fluid">
             <h1 className="title">
               Weather App
       </h1>
